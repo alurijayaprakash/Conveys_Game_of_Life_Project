@@ -9,6 +9,6 @@ package net.msitprogram.cgl;
  */
 public interface BoardInterface {
 	public void createBoard(int liveCells[][]);
-	public String showBoard(boolean newBoard[][]);
+	public String showBoard();
 
 }
