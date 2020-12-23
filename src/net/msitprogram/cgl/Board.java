@@ -3,7 +3,7 @@
  */
 package net.msitprogram.cgl;
 
-import java.util.Arrays;
+//import java.util.Arrays;
 
 /**
  * @author Jayaprakash Aluri
@@ -24,7 +24,6 @@ public class Board implements BoardInterface{
 	 * @param isStateChanged Status of board, it's flag variable
 	 */
 	public Board(int boardLength, int boardWidth, boolean isStateChanged) {
-		// TODO Auto-generated constructor stub
 		this.boardLength = boardLength;
 		this.boardWidth = boardWidth;
 		this.isStateChanged = isStateChanged;
@@ -34,16 +33,30 @@ public class Board implements BoardInterface{
 		
 	}
 	
+	private boolean isValidInput(int [][] liveCells) {
+//		System.out.println("isvalid started");
+		for (int i = 0; i < liveCells.length; i++) {
+			for (int j = 0; j < liveCells[0].length; j++) {
+				if ((liveCells[i][j] < 0 || liveCells[i][j] >= this.boardWidth) || (liveCells[i][j] < 0 || liveCells[i][j] >= this.boardLength)) {
+					throw new IllegalArgumentException("Index Out of Bounds");
+				}
+			}
+		}
+		return true;
+	}
+	
 	
 
 	/**
-	 * @param liveCells ==> 
+	 * @param liveCells 2D array contains all live cells positions
 	 */
 	public void createBoard(int[][] liveCells) {
-		for (int i = 0; i < liveCells.length; i++) {
-			int row = liveCells[i][0];
-			int col = liveCells[i][1];
-			newBoard[row][col] = true;
+		if (isValidInput(liveCells)) {
+			for (int i = 0; i < liveCells.length; i++) {
+				int row = liveCells[i][0];
+				int col = liveCells[i][1];
+				newBoard[row][col] = true;
+			}
 		}
 	}
 
@@ -67,19 +80,93 @@ public class Board implements BoardInterface{
 	}
 	
 	
+//	public String getNextGeneration (boolean currentGeneration[][]) {
+//		int k = currentGeneration.length;
+////		String s="";
+//		boolean[][] nextGeneration = new boolean[this.boardWidth][this.boardLength];
+//		for (int i = 0; i < k; i++) {
+//			for (int j = 0 ; j < k; j++) {
+//				int countOfLivesdata = countLiveNeighbours(currentGeneration, i, j);
+//				if (!(currentGeneration[i][j])) {
+//					if (countOfLivesdata == 3) {
+//						nextGeneration[i][j] = true;
+//					}
+//				}
+//				else {
+//					if (countOfLivesdata < 2) {
+//						nextGeneration[i][j] = false;
+//					}
+//					else if (countOfLivesdata <= 3){
+//						nextGeneration[i][j] = true;
+//					}
+//					else if (countOfLivesdata > 3){
+//						nextGeneration[i][j] = false;
+//					}
+//				}
+//			}
+//		}
+//		StringBuffer sbnext = new StringBuffer();
+//		for (int i = 0; i < k; i++) {
+//			for (int j = 0 ; j < k; j++) {
+//				if (!(newBoard[i][j])) {
+//					sbnext.append(".");
+//					//s=s+"."
+//				}
+//				else {
+//					sbnext.append("*");
+//				}
+//			}
+//			if (i < newBoard.length-1) {
+//				sbnext.append("\n");
+//			}
+//		}
+//		return sbnext.toString();
+//	}
 	
-	public int countLiveNeighbours(boolean[][] newBoard, int boardLength, int boardWidth) {
+	
+	
+	public void getNextGeneration () {
+		int k = this.newBoard.length;
+		boolean[][] nextGeneration = new boolean[this.boardWidth][this.boardLength];
+		for (int i = 0; i < k; i++) {
+			for (int j = 0 ; j < k; j++) {
+				int countOfLivesdata = countLiveNeighbours(this.newBoard, i, j);
+				if (!(this.newBoard[i][j])) {
+					if (countOfLivesdata == 3) {
+						nextGeneration[i][j] = true;
+					}
+				}
+				else {
+					if (countOfLivesdata < 2) {
+						nextGeneration[i][j] = false;
+					}
+					else if (countOfLivesdata <= 3){
+						nextGeneration[i][j] = true;
+					}
+					else if (countOfLivesdata > 3){
+						nextGeneration[i][j] = false;
+					}
+				}
+			}
+		}
+		this.newBoard = nextGeneration;
+	}
+	
+	
+	public int countLiveNeighbours(boolean[][] newBoard, int a, int b) {
+		int m = newBoard.length;
 		int n = newBoard.length;
 		int countLivesVal = 0;
-		for (int i = boardWidth - 1; i <= boardWidth + 1; i++) {
-			for (int j = boardLength - 1; j <= boardLength + 1; j++) {
-				if (i!= boardWidth || j != boardLength) {
-					if (i >= 0 && i < n && j >= 0 && j < n && newBoard[i][j]) {
+		for (int i = a - 1; i <= a + 1; i++) {
+			for (int j = b - 1; j <= b + 1; j++) {
+				if (i!= a || j != b) {
+					if (i >= 0 && i < m && j >= 0 && j < n && newBoard[i][j]) {
 						countLivesVal = countLivesVal + 1;
 					}
 				}
 			}
 		}
+//		System.out.println(countLivesVal);
 		return countLivesVal;
 	}
 	
@@ -92,19 +179,19 @@ public class Board implements BoardInterface{
 	}
 	
 	
-	/**
-	 * @return the isStateChanged
-	 */
-	public boolean isStateChanged() {
-		return isStateChanged;
-	}
-
-	/**
-	 * @param isStateChanged the isStateChanged to set
-	 */
-	public void setStateChanged(boolean isStateChanged) {
-		this.isStateChanged = isStateChanged;
-	}
+//	/**
+//	 * @return the isStateChanged
+//	 */
+//	public boolean isStateChanged() {
+//		return isStateChanged;
+//	}
+//
+//	/** 
+//	 * @param isStateChanged the isStateChanged to set
+//	 */
+//	public void setStateChanged(boolean isStateChanged) {
+//		this.isStateChanged = isStateChanged;
+//	}
 
 	/**
 	 * @return the boardLength
