@@ -5,11 +5,14 @@ package net.msitprogram.cgl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Scanner;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 /**
  * @author Jayaprakash Aluri
@@ -127,33 +130,55 @@ class TestJunitBoard {
 			Board b = new Board(10, 10, false);
 			int myarr [][] = {{4,3},{1,2},{2,1},{2,3},{3,3},{4,1},{0,5},{2,5}};
 			b.createBoard(myarr);
-			assertSame(2, b.countLiveNeighbours(b.getNewBoard(), 1, 1));
-			assertSame(4, b.countLiveNeighbours(b.getNewBoard(), 2, 2));
-			assertSame(5, b.countLiveNeighbours(b.getNewBoard(), 3, 2));
-			assertSame(2, b.countLiveNeighbours(b.getNewBoard(), 1, 5));
-			assertSame(3, b.countLiveNeighbours(b.getNewBoard(), 2, 4));	
+			assertSame(2, b.countLiveNeighbours(1, 1));
+			assertSame(4, b.countLiveNeighbours(2, 2));
+			assertSame(5, b.countLiveNeighbours(3, 2));
+			assertSame(2, b.countLiveNeighbours(1, 5));
+			assertSame(3, b.countLiveNeighbours(2, 4));	
 	}
 	
 	@Test
-	void getNextGenerationOne() {
+	void testgetNextGenerationOne() {
 		Board b = new Board(4, 4, false);
 		int myarr [][] = {{0,0},{1,1},{2,2}};
 		b.createBoard(myarr);
 		b.getNextGeneration();
 		String s = b.showBoard();
-//		System.out.println(s);
 		assertEquals(s, "....\n.*..\n....\n....");	
 	}
 	
 	@Test
-	void getNextGenerationTwo() {
+	void testgetNextGenerationTwo() {
 		Board b = new Board(4, 4, false);
 		int myarr [][] = {{1,2},{3,1},{0,2},{0,1},{2,2},{1,1}};
 		b.createBoard(myarr);
 		b.getNextGeneration();
 		String s1 = b.showBoard();
-		assertEquals(s1, ".**.\n...*\n..*.\n....");	
+		assertEquals(s1, ".**.\n...*\n..*.\n....");
 	}
-		
+	
 
+	
+	@Test
+	void testgetKthGenerationOne() {
+		Board b = new Board(4, 4, false);
+		int myarr [][] = {{1,2},{3,1},{0,2},{0,1},{2,2},{1,1}};
+		b.createBoard(myarr);
+		b.getKthGeneration(3);
+		String s1 = b.showBoard();
+		assertEquals(s1, "..*.\n..*.\n....\n....");
+	}
+	
+	@Test
+	void testgetKthGenerationTwo() {
+		Board b = new Board(6, 6, false);
+		int myarr [][] = {{1,2},{3,1},{0,2},{0,1},{2,2},{1,1},{3,2},{4,1},{5,1},{4,2}};
+		b.createBoard(myarr);
+		b.getKthGeneration(10);
+		String s1 = b.showBoard();
+		assertEquals(s1, "......\n....*.\n....*.\n......\n......\n......");
+	}
+
+	
+	
 }
