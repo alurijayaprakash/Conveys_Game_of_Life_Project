@@ -5,7 +5,7 @@ package net.msitprogram.cgl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author Jayaprakash Aluri
- *
+ * Version 2.0
  */
 class TestJunitBoard {
 
@@ -100,7 +100,9 @@ class TestJunitBoard {
 		
 	}
 	
-	// Board test 
+	/**
+	 * Here we are testing the board length and width
+	 */
 	@Test
 	void testBoard() {
 		Board b = new Board(5, 4, false);
@@ -108,7 +110,9 @@ class TestJunitBoard {
 		assertSame(5, b.getBoardLength());
 	}
 	
-//	 Test for Live Nighbours
+	/**
+	 * Here we are testing Live Nighbours count
+	 */
 	@Test
 	void testcountLiveNeighboursOne() {
 		try{
@@ -124,7 +128,9 @@ class TestJunitBoard {
 
 
 	
-	
+	/**
+	 * Here we are testing Live Nighbours count
+	 */
 	@Test
 	void testcountLiveNeighboursTwo() {
 			Board b = new Board(10, 10, false);
@@ -137,6 +143,9 @@ class TestJunitBoard {
 			assertSame(3, b.countLiveNeighbours(2, 4));	
 	}
 	
+	/**
+	 * Here we are testing Next Generation Board
+	 */
 	@Test
 	void testgetNextGenerationOne() {
 		Board b = new Board(4, 4, false);
@@ -147,6 +156,9 @@ class TestJunitBoard {
 		assertEquals(s, "....\n.*..\n....\n....");	
 	}
 	
+	/**
+	 * Here we are testing Next Generation Board
+	 */
 	@Test
 	void testgetNextGenerationTwo() {
 		Board b = new Board(4, 4, false);
@@ -158,7 +170,9 @@ class TestJunitBoard {
 	}
 	
 
-	
+	/**
+	 * Here we are testing Kth Generation Board
+	 */
 	@Test
 	void testgetKthGenerationOne() {
 		Board b = new Board(4, 4, false);
@@ -169,6 +183,9 @@ class TestJunitBoard {
 		assertEquals(s1, "..*.\n..*.\n....\n....");
 	}
 	
+	/**
+	 * Here we are testing Kth Generation Board
+	 */
 	@Test
 	void testgetKthGenerationTwo() {
 		Board b = new Board(6, 6, false);
@@ -178,7 +195,44 @@ class TestJunitBoard {
 		String s1 = b.showBoard();
 		assertEquals(s1, "......\n....*.\n....*.\n......\n......\n......");
 	}
+	
+	/**
+	 * Here we are testing Kth Generation Board
+	 */
+	@Test
+	void testgetKthGenerationThree() {
+		Board b = new Board(6, 6, false);
+		int myarr [][] = {{1,2},{3,1},{0,2},{0,1},{2,2},{1,1},{3,2},{4,1},{5,1},{4,2}};
+		b.createBoard(myarr);
+		b.getKthGeneration(3);
+		String s1 = b.showBoard();
+		assertEquals(s1, "......\n....*.\n..***.\n.*....\n.**...\n.**...");
+	}
+	
+	/**
+	 * Here we are testing Kth Generation Board
+	 */
+	@Test
+	void testgetKthGenerationFour() {
+		Board b = new Board(6, 6, false);
+		int myarr [][] = {{1,2},{3,1},{0,2},{0,1},{2,2},{1,1}};
+		b.createBoard(myarr);
+		b.getKthGeneration(8);
+		String s1 = b.showBoard();
+		assertEquals(s1, "......\n......\n......\n......\n......\n......");
+	}
 
+	/**
+	 * Here we are testing isStatusChanged after end of the game
+	 */
+	@Test
+	void testisStatusChanged() {
+		Board b = new Board(4, 4, false);
+		int myarr [][] = {{1,2},{3,1},{0,2},{0,1},{2,2},{1,1}};
+		b.createBoard(myarr);
+		b.getKthGeneration(14);
+		assertTrue(b.getisStateChanged());
+	}
 	
 	
 }

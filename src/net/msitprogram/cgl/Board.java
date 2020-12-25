@@ -4,11 +4,11 @@
 package net.msitprogram.cgl;
 
 import java.util.Arrays;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 /**
  * @author Jayaprakash Aluri
- *
+ * Version 2.0
  */
 public class Board implements BoardInterface{
 	
@@ -30,10 +30,13 @@ public class Board implements BoardInterface{
 		this.isStateChanged = isStateChanged;
 		this.newBoard = new boolean [this.boardWidth][this.boardLength];
 		
-		
-		
 	}
 	
+	/**
+	 * This method validate the 2D live cells Array
+	 * @param liveCells  2D Array contains lives cells positions
+	 * @return return true or Index Out of Bounds
+	 */
 	private boolean isValidInput(int [][] liveCells) {
 //		System.out.println("isvalid started");
 		for (int i = 0; i < liveCells.length; i++) {
@@ -49,6 +52,7 @@ public class Board implements BoardInterface{
 	
 
 	/**
+	 * This method used to create board
 	 * @param liveCells 2D array contains all live cells positions
 	 */
 	public void createBoard(int[][] liveCells) {
@@ -61,6 +65,10 @@ public class Board implements BoardInterface{
 		}
 	}
 
+	/**
+	 * Insted of toSTring , we are using Showboard method.
+	 * We can display the board by using this method.
+	 */
 	@Override
 	public String showBoard() {
 		StringBuffer sb = new StringBuffer();
@@ -81,6 +89,9 @@ public class Board implements BoardInterface{
 	}
 	
 
+	/**
+	 * We can get next generation board by this method
+	 */
 	
 	public void getNextGeneration () {
 		int k = this.newBoard.length;
@@ -107,10 +118,10 @@ public class Board implements BoardInterface{
 			}
 		}
 		if (Arrays.deepEquals(this.newBoard, nextGeneration.newBoard)) {
-			System.out.println("StatusCheck");
+//			System.out.println("StatusCheck");
 			this.isStateChanged = true;
 		} else {
-			System.out.println("StatusCheck else case");
+//			System.out.println("StatusCheck else case");
 			this.isStateChanged = false;
 		}
 //		this.newBoard = nextGeneration;
@@ -118,13 +129,12 @@ public class Board implements BoardInterface{
 	}
 	
 	
-//	public boolean hasNextGeneration() {
-//		getNextGeneration();
-//		if (this.isStateChanged == false) {
-//			return false;
-//		}
-//		return true;
-//	}
+	
+	
+	/**
+	 * We can get kth Generation board by this method
+	 * @param k means no of generations
+	 */
 	
 	public void getKthGeneration(int k) {
 //		createBoard(int[][] liveCells);
@@ -133,13 +143,13 @@ public class Board implements BoardInterface{
 			getNextGeneration();
 			if (this.isStateChanged == false) {
 			} else {
-				System.out.println(i + "true case");
+//				System.out.println(i + "true case");
 				System.out.println("Game ended after " + i + " th iteration");
 				System.out.println("Final board is : \n" + showBoard());
 				break;
 			}
 		}
-		System.out.println(i + "now case");
+//		System.out.println(i + "now case");
 		if (i <= k && this.isStateChanged == false)  {
 			System.out.println("Status of Baord at " + i + " Generations");
 			System.out.println("Final board is : \n" + showBoard());
@@ -147,6 +157,12 @@ public class Board implements BoardInterface{
 		
 	}
 	
+	/**
+	 * This method is used to create neighbour live cells
+	 * @param a board length
+	 * @param b board width
+	 * @return int value ie. count of Live Neighbours 
+	 */
 	public int countLiveNeighbours(int a, int b) {
 		int m = newBoard.length;
 		int n = newBoard.length;
@@ -168,27 +184,14 @@ public class Board implements BoardInterface{
 	
 	
 	
-	/**
-	 * @return the newBoard
-	 */
-	public boolean[][] getNewBoard() {
-		return newBoard;
-	}
-	
 	
 	/**
 	 * @return the isStateChanged
 	 */
-	public boolean isStateChanged() {
+	public boolean getisStateChanged() {
 		return isStateChanged;
 	}
 
-	/** 
-	 * @param isStateChanged the isStateChanged to set
-	 */
-	public void setStateChanged(boolean isStateChanged) {
-		this.isStateChanged = isStateChanged;
-	}
 
 	/**
 	 * @return the boardLength
