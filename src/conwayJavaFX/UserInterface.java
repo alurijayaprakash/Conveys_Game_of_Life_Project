@@ -265,15 +265,31 @@ public class UserInterface {
 	 * board for the simulation.
 	 */
 	private void loadImageData() {
+		int[][] myarr = null;
 		try {
 			// Your code goes here......
-			
+			Scanner sc = new Scanner(System.in);
+			int m = 0;
+	        // Reading Live cells
+	        while (sc.hasNextLine()) {
+				myarr[m][0] = sc.nextInt();
+	            myarr[m++][1] = sc.nextInt();
+	        }
+	        for (int i = 0; i < myarr.length; i++) { //this equals to the row in our matrix.
+	            for (int j = 0; j < myarr[i].length; j++) { //this equals to the column in each row.
+	               System.out.print(myarr[i][j] + " ");
+	            }
+	            System.out.println(); //change line on console as row comes to end in the matrix.
+	         }
 			
 		}
 		catch (Exception e)  {
 			// Since we have already done this check, this exception should never happen
+			System.out.println("An error occurred.");
+			e.printStackTrace();
 		}
 		
+//		System.out.println(arrdata);
 		button_Load.setDisable(true);				// Disable the Load button, since it is done
 		button_Start.setDisable(false);				// Enable the Start button
 	};												// and wait for the User to press it.
@@ -312,11 +328,18 @@ public class UserInterface {
 //		String s = b.showBoard();
 		// Your code goes here...
 		
+		int[][] newarrdata = null;						//prakash own
+//		System.out.println(arrdata);
 		for (int i = 0; i < boardSizeWidth; i++ ) {
 			for (int j = 0; j < boardSizeHeight; j++) {
-				
+				Board b = new Board(80, 80, false);
+				int myarr [][] = {{0,0},{3,3},{1,1}};
+				b.createBoard(myarr);
+				String s = b.showBoard();
 			}
 		}
+		
+		
 	}
 
 	/**********
