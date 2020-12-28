@@ -1,8 +1,8 @@
 /**
  * 
  */
-package net.msitprogram.cgl;
-
+// package net.msitprogram.cgl;
+package conwayJavaFX;
 import java.util.Scanner;
 
 /**

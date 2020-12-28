@@ -1,7 +1,8 @@
 /**
  * 
  */
-package net.msitprogram.cgl;
+// package net.msitprogram.cgl;
+package conwayJavaFX;
 
 /**
  * @author Jayaprakash Aluri

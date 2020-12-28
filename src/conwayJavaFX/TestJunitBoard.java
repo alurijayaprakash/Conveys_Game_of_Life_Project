@@ -1,8 +1,8 @@
 /**
  * 
  */
-package net.msitprogram.cgl;
-
+// package net.msitprogram.cgl;
+package conwayJavaFX;
 import static org.junit.jupiter.api.Assertions.*;
 
 //import java.util.Scanner;
