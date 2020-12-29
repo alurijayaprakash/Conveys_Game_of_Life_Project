@@ -2,6 +2,7 @@ package conwayJavaFX;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import javafx.animation.Animation;
@@ -41,7 +42,7 @@ public class UserInterface {
 	private double windowSizeWidth = ConwayMain.WINDOW_WIDTH - 40;
 	private double windowSizeHeight = controlPanelHeight-6;
 	private int cellSize = 6;
-	private int boardSizeWidth = (int)windowSizeWidth/cellSize;
+	private int boardSizeWidth = (int)(windowSizeWidth)/cellSize;
 	private int boardSizeHeight = (int)(windowSizeHeight)/cellSize;
 	private int marginWidth = 20;
 
@@ -77,10 +78,10 @@ public class UserInterface {
 	// These attributes define the Board used by the simulation and the graphical representation
 	// There are two Boards. The previous Board and the new Board.  Once the new Board has been
 	// displayed, it becomes the previous Board for the generation of the next new Board.
-	//private Board oddGameBoard = new Board();		// The Board for odd frames of the animation
+	private Board oddGameBoard = new Board(10, 10, false);		// The Board for odd frames of the animation
 	private Pane oddCanvas = new Pane();			// Pane that holds its graphical representation
 	
-	//private Board evenGameBoard =  new Board();	// The Board for even frames of the animation
+	private Board evenGameBoard =  new Board(10, 10, false);	// The Board for even frames of the animation
 	private Pane evenCanvas = new Pane();			// Pane that holds its graphical representation
 
 	private boolean toggle = true;					// A two-state attribute that specifies which
@@ -259,53 +260,73 @@ public class UserInterface {
 				button_Start.setDisable(true);
 			}
 	}
-
+	
+//	 For GUI
+	private void populateCanvas(Pane canvas) {
+		String s1 = oddGameBoard.showBoard();
+		System.out.println(s1);
+		int mycount = 0;
+		String[] line = s1.split("\n");
+		for (String element: line) {
+            System.out.println(element);
+        }
+		for(int x = 0; x < line.length-1; x++) {
+			for(int y = 0; y < line[x].length()-1; y++) {
+				System.out.println("mycunt is : " + mycount);
+				if (line[x].charAt(y) == '*') {
+					mycount = mycount + 1;
+					Rectangle myrect = new Rectangle(7*y+15, 7*x+15, 5, 5);
+					canvas.getChildren().add(myrect);
+				}
+			}
+		}
+//		System.out.println("mycunt is : " + mycount);
+		window.getChildren().add(canvas);
+	}
+	
 	/**********
 	 * This method is called when the Load button is pressed. It tries to load the data onto the
 	 * board for the simulation.
 	 */
 	private void loadImageData() {
-//		int[][] myarr;
 		try {
 			// Your code goes here......
-//			File myObj = new File("test01");
-			scanner_Input = new Scanner(new File(str_FileName));
-//			Scanner sc = new Scanner(myObj);
-			// count number of lines
+			Scanner scanCount = new Scanner(new File(str_FileName));
 			int linecount = 0;
-			while(scanner_Input.hasNextLine()) {
-				scanner_Input.nextLine();
+			while(scanCount.hasNextLine()) {
+				scanCount.nextLine();
 				linecount ++;
-//				System.out.print("Incrementing line count \n");
-				System.out.print("Here my line count is :" + linecount + "\n");
+//				System.out.print("Here my line count is :" + linecount + "\n");
 			}
-			System.out.print(linecount);
-			int m = 0;
+			
+			// Reading Live cells
+			Scanner scanner_Input = new Scanner(new File(str_FileName));
 			int[][] myarr = new int[linecount][2];
-	        // Reading Live cells
-	        while (scanner_Input.hasNextLine()) {
-	        	String tokens[] = scanner_Input.nextLine().trim().split(" ");
-				myarr[m][0] = Integer.parseInt(tokens[0]);
-	            myarr[m++][1] = Integer.parseInt(tokens[1]);   
+			int m = 0;
+	        while (scanner_Input.hasNextInt()) {
+	        	myarr[m][0] = scanner_Input.nextInt();
+	            myarr[m++][1] = scanner_Input.nextInt();   
 	        }
 	        scanner_Input.close();
-	        for (int i = 0; i < myarr.length; i++) { //this equals to the row in our matrix.
-	            for (int j = 0; j < myarr[i].length; j++) { //this equals to the column in each row.
-	               System.out.print(myarr[i][j] + " ");
-	            }
-	            System.out.println(); //change line on console as row comes to end in the matrix.
-	         }
-	        Board b = new Board(80, 80, false);
-	        b.createBoard(myarr);
+//	        for (int i = 0; i < myarr.length; i++) { //this equals to the row in our matrix.
+//	            for (int j = 0; j < myarr[i].length; j++) { //this equals to the column in each row.
+//	               System.out.print(myarr[i][j] + " ");
+//	            }
+//	            System.out.println(); //change line on console as row comes to end in the matrix.
+//	         }
+	        System.out.println(Arrays.deepToString(myarr));
+	        oddGameBoard.createBoard(myarr);
+	        populateCanvas(oddCanvas);
 	        
 		}
+		
 		catch (Exception e)  {
 			// Since we have already done this check, this exception should never happen
 			System.out.println("An error occurred.");
 			e.printStackTrace();
 		}
 		
-//		System.out.println(arrdata);
+		
 		button_Load.setDisable(true);				// Disable the Load button, since it is done
 		button_Start.setDisable(false);				// Enable the Start button
 	};												// and wait for the User to press it.
@@ -338,7 +359,20 @@ public class UserInterface {
 	 */
 	public void runSimulation(){
 		// Use the toggle to flip back and forth between the current generation and next generation boards.		
-		
+		if (toggle) {
+			toggle = false;
+			window.getChildren().remove(oddCanvas);
+			evenCanvas = new Pane();
+			evenGameBoard.getNextGeneration();
+	        populateCanvas(evenCanvas);
+		}
+		else {
+			toggle = true;
+			window.getChildren().remove(evenCanvas);
+			oddCanvas = new Pane();
+			oddGameBoard.getNextGeneration();
+	        populateCanvas(oddCanvas);
+		}
 	}
 
 	/**********

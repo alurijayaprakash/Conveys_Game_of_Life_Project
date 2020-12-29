@@ -52,6 +52,7 @@ public class Board implements BoardInterface{
 				}
 			}
 		}
+		System.out.println("Valid Input k");
 		return true;
 	}
 	
@@ -62,6 +63,7 @@ public class Board implements BoardInterface{
 	 * @param liveCells 2D array contains all live cells positions
 	 */
 	public void createBoard(int[][] liveCells) {
+//		System.out.println(Arrays.deepToString(liveCells));
 		if (isValidInput(liveCells)) {
 			for (int i = 0; i < liveCells.length; i++) {
 				int row = liveCells[i][0];
@@ -69,6 +71,8 @@ public class Board implements BoardInterface{
 				newBoard[row][col] = true;
 			}
 		}
+//		System.out.println(Arrays.deepToString(newBoard));
+//		System.out.println("Create Board Done" + newBoard.toString());
 	}
 
 	/**
@@ -78,8 +82,11 @@ public class Board implements BoardInterface{
 	@Override
 	public String showBoard() {
 		StringBuffer sb = new StringBuffer();
+		System.out.println("Here" + this.boardLength + "now" + this.boardWidth);
 		for (int i = 0; i < this.boardLength;i++){
+//			System.out.println("Before IF" + i);
 			for (int j = 0; j < this.boardWidth; j++) {
+//				System.out.println("After IF" + j);
 				if (!(newBoard[i][j])) {
 					sb.append(".");
 				}
@@ -187,21 +194,7 @@ public class Board implements BoardInterface{
 	}
 	
 	
-	// For GUI
-//	private Pane oddCanvas = new Pane();
-//	public String populateCanvas(Pane oddCanvas) {
-//		String s1 = showBoard();
-//		String[] lines = s1.split("\n");
-//		for(int x = 0; x < lines.length; x++) {
-//			for(int y = 0; y < lines.length; y++) {
-//				if (lines.charAt(x))
-//			}
-//		}
-//		
-//		return null;
-//	}
-//	
-	
+
 	
 	
 	/**
