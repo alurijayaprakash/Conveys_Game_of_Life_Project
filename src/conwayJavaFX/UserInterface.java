@@ -78,10 +78,10 @@ public class UserInterface {
 	// These attributes define the Board used by the simulation and the graphical representation
 	// There are two Boards. The previous Board and the new Board.  Once the new Board has been
 	// displayed, it becomes the previous Board for the generation of the next new Board.
-	private Board oddGameBoard = new Board(10, 10, false);		// The Board for odd frames of the animation
+	private Board oddGameBoard = new Board(80,80, false);		// The Board for odd frames of the animation
 	private Pane oddCanvas = new Pane();			// Pane that holds its graphical representation
 	
-	private Board evenGameBoard =  new Board(10, 10, false);	// The Board for even frames of the animation
+	private Board evenGameBoard =  new Board(80,80, false);	// The Board for even frames of the animation
 	private Pane evenCanvas = new Pane();			// Pane that holds its graphical representation
 
 	private boolean toggle = true;					// A two-state attribute that specifies which
@@ -264,23 +264,20 @@ public class UserInterface {
 //	 For GUI
 	private void populateCanvas(Pane canvas) {
 		String s1 = oddGameBoard.showBoard();
-		System.out.println(s1);
-		int mycount = 0;
+//		System.out.println(s1);
+//		System.out.println("----------------New Board----------------");
 		String[] line = s1.split("\n");
-		for (String element: line) {
-            System.out.println(element);
-        }
+//		for (String element: line) {
+//            System.out.println(element);
+//        }
 		for(int x = 0; x < line.length-1; x++) {
 			for(int y = 0; y < line[x].length()-1; y++) {
-				System.out.println("mycunt is : " + mycount);
 				if (line[x].charAt(y) == '*') {
-					mycount = mycount + 1;
 					Rectangle myrect = new Rectangle(7*y+15, 7*x+15, 5, 5);
 					canvas.getChildren().add(myrect);
 				}
 			}
 		}
-//		System.out.println("mycunt is : " + mycount);
 		window.getChildren().add(canvas);
 	}
 	
@@ -291,32 +288,25 @@ public class UserInterface {
 	private void loadImageData() {
 		try {
 			// Your code goes here......
+			// Reading no of lines in input
 			Scanner scanCount = new Scanner(new File(str_FileName));
 			int linecount = 0;
 			while(scanCount.hasNextLine()) {
 				scanCount.nextLine();
 				linecount ++;
-//				System.out.print("Here my line count is :" + linecount + "\n");
 			}
 			
 			// Reading Live cells
 			Scanner scanner_Input = new Scanner(new File(str_FileName));
-			int[][] myarr = new int[linecount][2];
+			int[][] liveCells = new int[linecount][2];
 			int m = 0;
 	        while (scanner_Input.hasNextInt()) {
-	        	myarr[m][0] = scanner_Input.nextInt();
-	            myarr[m++][1] = scanner_Input.nextInt();   
+	        	liveCells[m][0] = scanner_Input.nextInt();
+	            liveCells[m++][1] = scanner_Input.nextInt();   
 	        }
 	        scanner_Input.close();
-//	        for (int i = 0; i < myarr.length; i++) { //this equals to the row in our matrix.
-//	            for (int j = 0; j < myarr[i].length; j++) { //this equals to the column in each row.
-//	               System.out.print(myarr[i][j] + " ");
-//	            }
-//	            System.out.println(); //change line on console as row comes to end in the matrix.
-//	         }
-	        System.out.println(Arrays.deepToString(myarr));
-	        oddGameBoard.createBoard(myarr);
-	        populateCanvas(oddCanvas);
+	        oddGameBoard.createBoard(liveCells);	//creating board by using oddGameBoard object
+	        populateCanvas(oddCanvas);				//populate Canvas from oddCanvas
 	        
 		}
 		
@@ -360,18 +350,18 @@ public class UserInterface {
 	public void runSimulation(){
 		// Use the toggle to flip back and forth between the current generation and next generation boards.		
 		if (toggle) {
-			toggle = false;
-			window.getChildren().remove(oddCanvas);
-			evenCanvas = new Pane();
-			evenGameBoard.getNextGeneration();
-	        populateCanvas(evenCanvas);
+			toggle = false;									//Flag Variable
+			window.getChildren().remove(oddCanvas);			//Removing the oddCanvas
+			evenCanvas = new Pane();						//Creating new pane for evenCanvas
+			evenGameBoard.getNextGeneration();				//Creating next generation even game board
+	        populateCanvas(evenCanvas);						//populate Canvas from evenCanvas
 		}
 		else {
-			toggle = true;
-			window.getChildren().remove(evenCanvas);
-			oddCanvas = new Pane();
-			oddGameBoard.getNextGeneration();
-	        populateCanvas(oddCanvas);
+			toggle = true;									//Flag Variable
+			window.getChildren().remove(evenCanvas);		//Removing the evenCanvas
+			oddCanvas = new Pane();							//Creating new pane for evenCanvas
+			oddGameBoard.getNextGeneration();				//Creating next generation odd game board
+	        populateCanvas(oddCanvas);						//populate Canvas from oddCanvas
 		}
 	}
 

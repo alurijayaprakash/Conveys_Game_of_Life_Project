@@ -31,9 +31,10 @@ public class Board implements BoardInterface{
 	 * @param isStateChanged Status of board, it's flag variable
 	 */
 	public Board(int boardLength, int boardWidth, boolean isStateChanged) {
-		this.boardLength = boardLength;
-		this.boardWidth = boardWidth;
+		this.boardLength = boardWidth;
+		this.boardWidth = boardLength;
 		this.isStateChanged = isStateChanged;
+//		System.out.println("Here 1 " + this.boardLength + "now" + this.boardWidth);
 		this.newBoard = new boolean [this.boardWidth][this.boardLength];
 		
 	}
@@ -52,7 +53,7 @@ public class Board implements BoardInterface{
 				}
 			}
 		}
-		System.out.println("Valid Input k");
+//		System.out.println("Valid Input k");
 		return true;
 	}
 	
@@ -71,7 +72,7 @@ public class Board implements BoardInterface{
 				newBoard[row][col] = true;
 			}
 		}
-//		System.out.println(Arrays.deepToString(newBoard));
+		System.out.println(Arrays.deepToString(newBoard));
 //		System.out.println("Create Board Done" + newBoard.toString());
 	}
 
@@ -82,10 +83,10 @@ public class Board implements BoardInterface{
 	@Override
 	public String showBoard() {
 		StringBuffer sb = new StringBuffer();
-		System.out.println("Here" + this.boardLength + "now" + this.boardWidth);
-		for (int i = 0; i < this.boardLength;i++){
+//		System.out.println("Here" + this.boardLength + "now" + this.boardWidth);
+		for (int i = 0; i < this.boardLength-1;i++){
 //			System.out.println("Before IF" + i);
-			for (int j = 0; j < this.boardWidth; j++) {
+			for (int j = 0; j < this.boardWidth-1; j++) {
 //				System.out.println("After IF" + j);
 				if (!(newBoard[i][j])) {
 					sb.append(".");
