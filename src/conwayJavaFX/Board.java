@@ -6,6 +6,10 @@
 package conwayJavaFX;
 
 import java.util.Arrays;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.geometry.Pos;
 //import java.util.Scanner;
 
 /**
@@ -183,7 +187,20 @@ public class Board implements BoardInterface{
 	}
 	
 	
-	
+	// For GUI
+//	private Pane oddCanvas = new Pane();
+//	public String populateCanvas(Pane oddCanvas) {
+//		String s1 = showBoard();
+//		String[] lines = s1.split("\n");
+//		for(int x = 0; x < lines.length; x++) {
+//			for(int y = 0; y < lines.length; y++) {
+//				if (lines.charAt(x))
+//			}
+//		}
+//		
+//		return null;
+//	}
+//	
 	
 	
 	

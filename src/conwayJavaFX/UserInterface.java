@@ -265,23 +265,39 @@ public class UserInterface {
 	 * board for the simulation.
 	 */
 	private void loadImageData() {
-		int[][] myarr = null;
+//		int[][] myarr;
 		try {
 			// Your code goes here......
-			Scanner sc = new Scanner(System.in);
+//			File myObj = new File("test01");
+			scanner_Input = new Scanner(new File(str_FileName));
+//			Scanner sc = new Scanner(myObj);
+			// count number of lines
+			int linecount = 0;
+			while(scanner_Input.hasNextLine()) {
+				scanner_Input.nextLine();
+				linecount ++;
+//				System.out.print("Incrementing line count \n");
+				System.out.print("Here my line count is :" + linecount + "\n");
+			}
+			System.out.print(linecount);
 			int m = 0;
+			int[][] myarr = new int[linecount][2];
 	        // Reading Live cells
-	        while (sc.hasNextLine()) {
-				myarr[m][0] = sc.nextInt();
-	            myarr[m++][1] = sc.nextInt();
+	        while (scanner_Input.hasNextLine()) {
+	        	String tokens[] = scanner_Input.nextLine().trim().split(" ");
+				myarr[m][0] = Integer.parseInt(tokens[0]);
+	            myarr[m++][1] = Integer.parseInt(tokens[1]);   
 	        }
+	        scanner_Input.close();
 	        for (int i = 0; i < myarr.length; i++) { //this equals to the row in our matrix.
 	            for (int j = 0; j < myarr[i].length; j++) { //this equals to the column in each row.
 	               System.out.print(myarr[i][j] + " ");
 	            }
 	            System.out.println(); //change line on console as row comes to end in the matrix.
 	         }
-			
+	        Board b = new Board(80, 80, false);
+	        b.createBoard(myarr);
+	        
 		}
 		catch (Exception e)  {
 			// Since we have already done this check, this exception should never happen
@@ -321,24 +337,7 @@ public class UserInterface {
 	 * This method is run each time the timeline triggers it
 	 */
 	public void runSimulation(){
-		// Use the toggle to flip back and forth between the current generation and next generation boards.
-//		Board b = new Board(80, 80, false);
-//		int myarr [][] = {{0,0},{3,3},{1,1}};
-//		b.createBoard(myarr);
-//		String s = b.showBoard();
-		// Your code goes here...
-		
-		int[][] newarrdata = null;						//prakash own
-//		System.out.println(arrdata);
-		for (int i = 0; i < boardSizeWidth; i++ ) {
-			for (int j = 0; j < boardSizeHeight; j++) {
-				Board b = new Board(80, 80, false);
-				int myarr [][] = {{0,0},{3,3},{1,1}};
-				b.createBoard(myarr);
-				String s = b.showBoard();
-			}
-		}
-		
+		// Use the toggle to flip back and forth between the current generation and next generation boards.		
 		
 	}
 
